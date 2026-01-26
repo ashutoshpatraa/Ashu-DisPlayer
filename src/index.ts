@@ -1,0 +1,46 @@
+import { launch } from "./LavaClient";
+import { start } from "./shard";
+import logger from "./structures/Logger";
+import { DISPLAYER_BANNER } from "./utils/LavaLogo";
+import { ThemeSelector } from "./utils/ThemeSelector";
+
+const theme = new ThemeSelector();
+
+/**
+ * Sets the console window title.
+ * @param title - The new title for the console window.
+ */
+function setConsoleTitle(title: string): void {
+	// Write the escape sequence to change the console title
+	process.stdout.write(`\x1b]0;${title}\x07`);
+}
+
+// Determine if this process is a Shard or the Manager
+if (process.env.SHARDING_MANAGER) {
+	// Child process (Shard)
+	launch().catch((err) => {
+		logger.error("[CLIENT] Critical error in shard:", err);
+		process.exit(1);
+	});
+} else {
+	// Main process (Manager)
+	try {
+		console.clear();
+		setConsoleTitle("Ashu's DisPlayer");
+		console.log(theme.purpleNeon(DISPLAYER_BANNER));
+		start();
+	} catch (err) {
+		logger.error("[MANAGER] An error has occurred:", err);
+	}
+}
+
+/**
+ * Project: lavamusic
+ * Author: Appu
+ * Main Contributor: LucasB25
+ * Company: Coders
+ * Copyright (c) 2024. All rights reserved.
+ * This code is the property of Coder and may not be reproduced or
+ * modified without permission. For more information, contact us at
+ * https://discord.gg/YQsGbTwPBx
+ */
