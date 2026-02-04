@@ -1,8 +1,5 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: explanation */
 import {
-	ActionRowBuilder,
-	ButtonBuilder,
-	ButtonStyle,
 	type CacheType,
 	ChannelType,
 	Collection,
@@ -122,23 +119,6 @@ export default class InteractionCreate extends Event {
 				if (command.permissions?.dev && this.client.env.OWNER_IDS) {
 					const isDev = this.client.env.OWNER_IDS.includes(interaction.user.id);
 					if (!isDev) return;
-				}
-			}
-			if (command.vote && this.client.env.TOPGG) {
-				const voted = await this.client.topGG.hasVoted(interaction.user.id);
-				if (!voted) {
-					const voteBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
-						new ButtonBuilder()
-							.setLabel(t(I18N.events.interaction.vote_button))
-							.setURL(`https://top.gg/bot/${this.client.user?.id}/vote`)
-							.setStyle(ButtonStyle.Link),
-					);
-
-					return await interaction.reply({
-						content: t(I18N.events.interaction.vote_message),
-						components: [voteBtn],
-						flags: MessageFlags.Ephemeral,
-					});
 				}
 			}
 			if (command.player) {

@@ -29,7 +29,6 @@ const envSchema = z.object({
 		z.string().array().optional(),
 	),
 	GUILD_ID: z.string().optional(),
-	TOPGG: z.string().optional(),
 	KEEP_ALIVE: z.preprocess((val) => val === "true", z.boolean().default(false)),
 	LOG_CHANNEL_ID: z.string().optional(),
 	LOG_COMMANDS_ID: z.string().optional(),

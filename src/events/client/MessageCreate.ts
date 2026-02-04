@@ -1,7 +1,4 @@
 import {
-	ActionRowBuilder,
-	ButtonBuilder,
-	ButtonStyle,
 	ChannelType,
 	Collection,
 	EmbedBuilder,
@@ -128,23 +125,6 @@ export default class MessageCreate extends Event {
 
 			if (command.permissions?.dev && this.client.env.OWNER_IDS) {
 				if (!isDev) return;
-			}
-		}
-
-		if (command.vote && this.client.env.TOPGG) {
-			const voted = await this.client.topGG.hasVoted(message.author.id);
-			if (!(isDev || voted)) {
-				const voteBtn = new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setLabel(t(I18N.events.message.vote_button, { lng: locale }))
-						.setURL(`https://top.gg/bot/${this.client.user?.id}/vote`)
-						.setStyle(ButtonStyle.Link),
-				);
-
-				return await message.reply({
-					content: t(I18N.events.message.vote_message, { lng: locale }),
-					components: [voteBtn],
-				});
 			}
 		}
 
