@@ -1,4 +1,3 @@
-import { Api } from "@top-gg/sdk";
 import {
 	type APIApplicationCommandOption,
 	ApplicationCommandType,
@@ -43,7 +42,6 @@ export default class Lavamusic extends Client {
 	public env: typeof env = env;
 
 	// Services
-	public topGG!: Api;
 	public manager!: LavalinkClient;
 	public rest = new REST({ version: "10" }).setToken(env.TOKEN ?? "");
 
@@ -59,12 +57,6 @@ export default class Lavamusic extends Client {
 	 */
 	public async start(token: string): Promise<void> {
 		await initI18n();
-
-		if (env.TOPGG) {
-			this.topGG = new Api(env.TOPGG);
-		} else {
-			logger.warn("Top.gg token not found! Skipping Top.gg API initialization");
-		}
 
 		this.manager = new LavalinkClient(this);
 
