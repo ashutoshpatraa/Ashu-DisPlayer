@@ -1,5 +1,4 @@
 import { Events } from "discord.js";
-import { AutoPoster } from "topgg-autoposter";
 import { env } from "../../env";
 import { Event, type Lavamusic } from "../../structures/index";
 import logger from "../../structures/Logger";
@@ -25,16 +24,6 @@ export default class Ready extends Event {
 			status: env.BOT_STATUS as any,
 		});
 
-		if (env.TOPGG) {
-			const autoPoster = AutoPoster(env.TOPGG, this.client);
-			setInterval(() => {
-				autoPoster.on("posted", (_stats) => {
-					logger.info("Successfully posted stats to Top.gg!");
-				});
-			}, 86400000); // 24 hours in milliseconds
-		} else {
-			logger.warn("Top.gg token not found. Skipping auto poster.");
-		}
 		await this.client.manager.init({ ...this.client.user!, shards: "auto" });
 	}
 }
